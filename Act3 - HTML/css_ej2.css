@@ -1,0 +1,32 @@
+body {
+    background-color: aqua;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: blue;
+    font-size: 20px;
+}
+
+.linea1 {
+    padding: 10px;
+    display: block;
+    margin-top: 15px;
+}
+
+.linea2, .linea4 {
+    background-color: silver;
+    padding: 5px;
+    display: inline-block;
+    width: 100%;
+}
+
+.linea3 {
+    text-align: right;
+    display: block;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 30px;
+}
+
+.rojo {
+    color: red;
+}

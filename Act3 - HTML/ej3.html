@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise3</title>
+<style>
+    body {background-color: green;}
+</style>
+
+</head>
+<body>
+    <hr>
+    <h4>A nested list:</h4>
+    <ul>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <ul>
+            <li>Black tea</li>
+            <li>Green tea</li>
+            <ul>
+                <li>China</li>
+                <li>Africa</li>
+            </ul>
+        
+        </ul>
+        <li>Milk</li>
+    </ul>
+
+<p>Coffee</p>
+<ul style="list-style-type: none;";>
+  <li>-black hot drink</li>
+</ul>
+<p>Milk</p>
+<ul style="list-style-type: none";>
+  <li>-white cold drink</li>
+</ul>
+
+<h4>Numbered list:</h4>
+<ol>
+  <li>Apples</li>
+  <li>Bananas</li>
+  <li>Lemons</li>
+  <li>Oranges</li>
+</ol>
+
+<h4>Letters list:</h4>
+<ol type="A">
+    <li>Apples</li>
+    <li>Bananas</li>
+    <li>Lemons</li>
+    <li>Oranges</li>
+</ol>
+
+<h4>Lowercase letters list:</h4>
+<ol type="a">
+    <li>Apples</li>
+    <li>Bananas</li>
+    <li>Lemons</li>
+    <li>Oranges</li>
+  </ol>
+
+<h4>Roman numbers list:</h4>
+  <ol type="I">
+      <li>Apples</li>
+      <li>Bananas</li>
+      <li>Lemons</li>
+      <li>Oranges</li>
+    </ol>
+
+<h4>Lowercase Roman numbers list:</h4>
+  <ol type="i">
+      <li>Apples</li>
+      <li>Bananas</li>
+      <li>Lemons</li>
+      <li>Oranges</li>
+    </ol>
+
+<hr>
+<p>Link per enviar emails a una adreça determinada:<br><a href="https://www.google.com">Enviar email.</a></p>
+<hr>
+
+<h2>CREATE TABLE examples</h2>
+<ul>
+    <li><a href="https://www.google.com">Basic CREATE TABLE statement</a></li>
+    <li><a href="https://www.google.com">Creating a table with a particular storage engine</a></li>
+    <li><a href="https://www.google.com">Creating a table with auto increment</a></li>
+    <li><a href="https://www.google.com">Creating a table with the current timestamp</a></li>
+    <li><a href="https://www.google.com">Creating a table with TIMESTAMP DEFAULT NOW()</a></li>
+    <li><a href="https://www.google.com">Viewing a table definition</a></li>
+</ul>
+
+<h2>Basic CREATE TABLE statement</h2>
+<p>A very basic <code>CREATE TABLE</code> statement which should work in any SQL database:</p>
+<pre>mysql&gt; CREATE TABLE example (
+    &nbsp;&nbsp;id INT,
+    &nbsp;&nbsp;data VARCHAR(100)
+    );
+Query OK, 0 rows affected (0.03 sec)</pre>
+
+<h2>Creating a table with a particular storage engine</h2>
+<p>MySQL provides a variety of different table types with differing levels of functionality. The usual defualt, and most widely used, is <code>MyISAM.</code>Other storage types must be explicitly defined:</p>
+<pre>mysql&gt; CREATE TABLE example_innodb (
+    &nbsp;&nbsp;id INT,
+    &nbsp;&nbsp;data VARCHAR(100)
+    ); TYPE=innodb;
+Query OK, 0 rows affected (0.03 sec)</pre>
+
+<p>Note that beginning with MySQL 4.1 <code>Engine=innodb</code> is the preferred method of defining the storage type.</p>
+<p>Use <code>SHOW CREATE TABLE</code> (see <a href="https://www.google.com">below</a>) to check that MySQL has created the table as you defined it.</p>
+
+
+<h2>Creating a table with auto_increment</h2>
+<p>Often you'll want to be able to automatically assign a sequential value to a column:</p>
+<pre>mysql&gt; CREATE TABLE example_autoincrement (
+    &nbsp;&nbsp;id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    &nbsp;&nbsp;data VARCHAR(100)
+    );
+Query OK, 0 rows affected (0.01 sec)</pre>
+
+<pre>
+mysql> INSERT INTO example_autoincrement (data)
+    -> VALUES ('Hello world');
+Query OK, 1 row affected (0.01 sec)
+    
+mysql> SELECT * FROM example_autoincrement;
++----+-------------+
+| id | data        |
++----+-------------+
+|  1 | Hello world |
++----+-------------+
+1 row in set (0.01 sec)
+</pre>
+
+<h2>Creating a table with the current timestamp</h2>
+<p>Often it's useful to have an automatic timestamp on each record. The MySQL special datatype <code>TIMESTAMP</code> enables you to keep track of changes to a record:</p>
+
+<pre>mysql&gt; CREATE TABLE example_timestamp (
+    &nbsp;&nbsp;id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    &nbsp;&nbsp;data VARCHAR(100)
+    &nbsp;&nbsp;cur_timestamp TIMESTAMP(8)
+    );
+Query OK, 0 rows affected (0.00 sec)</pre>
+
+<pre>
+mysql> INSERT INTO example_timestamp (data)
+        -> VALUES ('THe time of creation is:');
+Query OK, 1 row affected (0.00 sec)
+        
+mysql> SELECT * FROM example_autoincrement;
++----+--------------------------+---------------------+
+| id | data                     | cur_timestamp       |
++----+--------------------------+---------------------+
+|  1 | The time of creation is: | 2004-12-01 20:37:22 |
++----+--------------------------+---------------------+
+1 row in set (0.01 sec)
+    </pre>
+    <pre>
+mysql> UPDATE example_timestamp
+          SET DATA='The current timestamp is: '
+          WHERE id=1;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1 Changed: 1 Warning: 0
+            
+mysql> SELECT * FROM example_timestamp;
++----+---------------------------+---------------------+
+| id | data                      | cur_timestamp       |
++----+---------------------------+---------------------+
+|  1 | The current timestamp is: | 2004-12-01 20:38:55 |
++----+---------------------------+---------------------+
+1 row in set (0.01 sec)
+        </pre>
+<p>The column <code>cur_timestamp</code> is automagically updated every time the record is changed.</p>
+
+<h2>Creating a table with TIMESTAMP DEFAULT NOW()</h2>
+
+<p>MySQL supports the construct <code>TIMESTAMP DEFAULT NOW() </code>only from version 4.1:</p>
+
+
+<pre>CREATE TABLE example_default_now (
+    &nbsp;&nbsp;id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    &nbsp;&nbsp;data VARCHAR(100)
+    &nbsp;&nbsp;created TIEMSTAMP DEFAULT NOW()
+    );
+</pre>
+
+<p>In this case the column <code>created </code>retains its initial value and is not changed during subsequent updates.</p>
+
+<p>For versions prior to 4.1, the only workaroudn is to create two timestamp columns in a table, and explicitly set the second one when inserting the record. Remember: the first <code>TIMESTAMP</code> will be automagically updated on each record update.</p>
+
+
+<!-- Has dicho que no hace falta hacerlo todo, con unos cuantos ejemplos de hacer tablas con la etiqueta <pre> es suficiente -->
+
+
+
+
+
+
+</body>
+</html>
